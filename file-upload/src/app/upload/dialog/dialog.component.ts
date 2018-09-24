@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild,Output, EventEmitter } from '@angular/core';
 import { MatDialogRef } from '@angular/material';
 import { UploadService } from '../upload.service';
 import { forkJoin } from 'rxjs';
@@ -18,6 +18,7 @@ export class DialogComponent implements OnInit {
   showCancelButton = true; 
   uploading = false;
   uploadSuccessful = false;
+  @Output() clickevent = new EventEmitter<string>();
 
   constructor(public dialogRef: MatDialogRef<DialogComponent>, public uploadService: UploadService) {}
 
@@ -25,10 +26,12 @@ export class DialogComponent implements OnInit {
   }
 
   addFiles() {
+    console.log("addfiles");
     this.file.nativeElement.click();
   }
 
   onFilesAdded() {
+    console.log("onFilesAdded");
     const files: { [key: string]: File } = this.file.nativeElement.files;
     for (let key in files) {
       if (!isNaN(parseInt(key))) {
@@ -40,7 +43,10 @@ export class DialogComponent implements OnInit {
   closeDialog() {
     // if everything was uploaded already, just close the dialog
     if (this.uploadSuccessful) {
+      this.clickevent.emit("success");
       return this.dialogRef.close();
+      
+      
     }
   
     // set the component state to "uploading"
@@ -52,6 +58,7 @@ export class DialogComponent implements OnInit {
     // convert the progress map into an array
     let allProgressObservables = [];
     for (let key in this.progress) {
+      console.log(this.progress[key].progress);
       allProgressObservables.push(this.progress[key].progress);
     }
   
@@ -75,6 +82,7 @@ export class DialogComponent implements OnInit {
   
       // ... the upload was successful...
       this.uploadSuccessful = true;
+      
   
       // ... and the component is no longer uploading
       this.uploading = false;

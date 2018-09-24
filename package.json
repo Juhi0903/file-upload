@@ -1,0 +1,19 @@
+{
+  "name": "upload",
+  "version": "1.0.0",
+  "description": "test",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "juhi singh",
+  "license": "ISC",
+  "dependencies": {
+    "@angular/cdk": "^6.4.7",
+    "@angular/flex-layout": "^6.0.0-beta.18",
+    "@angular/material": "^6.4.7",
+    "cors": "^2.8.4",
+    "express": "^4.16.3",
+    "formidable": "^1.2.1"
+  }
+}
